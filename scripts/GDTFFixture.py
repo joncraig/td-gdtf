@@ -100,7 +100,7 @@ class GDTFFixture(CallbacksExt):
 				logical_chan = c.logical_channels[0]
 				offset = c.offset
 				name = logical_chan.attribute.str_link
-				p_name = name.lower().capitalize().replace('_', '')
+				p_name = name.lower().capitalize().replace('_', '').replace(' ', '')
 				
 				#pprint(logical_chan.channel_functions[0].__dict__)
 
@@ -125,7 +125,7 @@ class GDTFFixture(CallbacksExt):
 				
 
 				#pprint(channel_function.mode_to.__dict__)
-				#print(name, default)
+				print(f"{name=}, {default=},{p_name=}")
 
 				p = dmx_page.appendInt(
 					p_name,
