@@ -85,13 +85,16 @@ class GDTFFixture(CallbacksExt):
 		dmx_page = self.ownerComp.customPages[pages.index('DMX')]
 
 		channels = []
-		chan_sets = {}
 		order = 0
+		if self.fixture == None:
+			self.Load()
+			return
 		m = self.fixture.dmx_modes[mode]
 
 		#pprint([dir(c) for c in m.dmx_channels])
 
 		for c in m.dmx_channels:
+			chan_sets = {}
 			order += 1
 			#print(dir(c))
 			#print(len(c.logical_channels))
@@ -100,8 +103,10 @@ class GDTFFixture(CallbacksExt):
 				logical_chan = c.logical_channels[0]
 				offset = c.offset
 				name = logical_chan.attribute.str_link
-				p_name = name.lower().capitalize().replace('_', '').replace(' ', '')
-				
+				p_name = name.lower().capitalize()
+				p_name = re.sub("[^A-Za-z0-9]", "", p_name)
+				# print(f"{p_name=}")
+
 				#pprint(logical_chan.channel_functions[0].__dict__)
 
 
@@ -125,7 +130,7 @@ class GDTFFixture(CallbacksExt):
 				
 
 				#pprint(channel_function.mode_to.__dict__)
-				print(f"{name=}, {default=},{p_name=}")
+				# print(f"{name=}, {default=},{p_name=}")
 
 				p = dmx_page.appendInt(
 					p_name,
